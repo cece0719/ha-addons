@@ -1,3 +1,4 @@
 name: "Custom Home Assistant Add-ons"
 url: "https://github.com/cece0719/ha-addons"
-maintainer: "cece0719" 
+maintainer: "cece0719"
+description: "커스텀 홈어시스턴트 애드온 모음" 

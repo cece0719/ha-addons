@@ -15,4 +15,5 @@ ports:
 map:
   - config:rw
   - ssl:ro
-webui: "http://[HOST]:[PORT]:8030/" 
+webui: "http://[HOST]:[PORT]:8030/"
+image: "cece0719/hello-world-{arch}" 
