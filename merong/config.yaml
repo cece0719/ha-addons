@@ -15,4 +15,4 @@ ports:
 map:
   - config:rw
 webui: "http://[HOST]:[PORT]:8040/"
-image: "cece0719/merong-{arch}" 
+image: "ghcr.io/cece0719/merong-{arch}" 

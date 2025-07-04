@@ -7,4 +7,6 @@ build_from:
   i386: ghcr.io/hassio-addons/base/i386:14.0.0
 labels:
   io.hass.type: addon
-  io.hass.version: "1.0.0" 
+  io.hass.version: "1.0.0"
+  io.hass.name: "Hello World"
+  io.hass.description: "포트 8030에서 Hello World를 표시하는 간단한 애드온" 

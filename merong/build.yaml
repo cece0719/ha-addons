@@ -7,4 +7,6 @@ build_from:
   i386: ghcr.io/hassio-addons/base/i386:14.0.0
 labels:
   io.hass.type: addon
-  io.hass.version: "1.0.0" 
+  io.hass.version: "1.0.0"
+  io.hass.name: "Merong"
+  io.hass.description: "Merong을 표시하는 재미있는 애드온" 
