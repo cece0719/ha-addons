@@ -1,16 +1,23 @@
-FROM python:3.9-alpine
+ARG BUILD_FROM
+FROM $BUILD_FROM
 
-# 필요한 패키지 설치
-RUN apk add --no-cache \
-    gcc \
-    musl-dev \
-    python3-dev
+# 환경 변수 설정
+ENV LANG C.UTF-8
+
+# Python 및 필요한 패키지 설치
+RUN \
+    apk add --no-cache \
+        python3 \
+        py3-pip \
+        gcc \
+        musl-dev \
+        python3-dev \
+    \
+    && pip3 install --no-cache --upgrade pip \
+    && pip3 install --no-cache flask
 
 # 작업 디렉토리 설정
 WORKDIR /app
-
-# Python 의존성 설치
-RUN pip install flask
 
 # 애플리케이션 파일 복사
 COPY app.py .
@@ -19,4 +26,4 @@ COPY app.py .
 EXPOSE 8040
 
 # 애플리케이션 실행
-CMD ["python", "app.py"] 
+CMD ["python3", "app.py"] 
