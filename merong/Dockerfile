@@ -21,13 +21,9 @@ WORKDIR /app
 
 # 애플리케이션 파일 복사
 COPY app.py .
-COPY run /run
-
-# 실행 권한 부여
-RUN chmod a+x /run
 
 # 포트 노출
 EXPOSE 8040
 
 # 애플리케이션 실행
-CMD ["/run"] 
+CMD ["python3", "app.py"] 
