@@ -1,5 +1,5 @@
 name: Hello World
-version: "1.0.0"
+version: "1.0.1"
 slug: hello_world
 description: A simple Hello World add-on for Home Assistant
 url: https://github.com/cece0719/ha-addons
@@ -11,11 +11,18 @@ arch:
   - i386
 startup: application
 boot: auto
+host_network: false
 ports:
   8099/tcp: 8099
 ports_description:
   8099/tcp: Web interface
 webui: http://[HOST]:[PORT:8099]
+map:
+  - config:rw
+  - data:rw
+init: false
+services:
+  - nginx:wantedby
 options:
   message: "Hello World!"
 schema:

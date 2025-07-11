@@ -2,10 +2,17 @@
 import json
 import logging
 import os
+import sys
 from flask import Flask, render_template_string
 
 # 로깅 설정
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
+)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
@@ -14,9 +21,14 @@ def get_options():
     """Home Assistant 옵션 읽기"""
     try:
         with open('/data/options.json', 'r') as f:
-            return json.load(f)
+            options = json.load(f)
+            logger.info(f"Options loaded: {options}")
+            return options
     except FileNotFoundError:
-        logger.warning("Options file not found, using defaults")
+        logger.warning("Options file not found at /data/options.json, using defaults")
+        return {"message": "Hello World!"}
+    except Exception as e:
+        logger.error(f"Error reading options: {e}")
         return {"message": "Hello World!"}
 
 @app.route('/')
@@ -82,8 +94,42 @@ def hello():
 
 @app.route('/health')
 def health():
-    return {"status": "healthy", "port": 8099}
+    """헬스 체크 엔드포인트"""
+    return {"status": "healthy", "port": 8099, "message": "Hello World Add-on is running"}
+
+@app.route('/debug')
+def debug():
+    """디버그 정보"""
+    options = get_options()
+    return {
+        "status": "running",
+        "port": 8099,
+        "options": options,
+        "message": "Debug info"
+    }
 
 if __name__ == '__main__':
-    logger.info("Hello World Add-on starting on port 8099...")
-    app.run(host='0.0.0.0', port=8099, debug=False)
+    logger.info("=" * 50)
+    logger.info("Hello World Add-on starting...")
+    logger.info(f"Python version: {sys.version}")
+    logger.info(f"Flask app: {app}")
+    logger.info("Checking data directory...")
+    
+    # 데이터 디렉토리 확인
+    if os.path.exists('/data'):
+        logger.info("Data directory exists")
+        if os.path.exists('/data/options.json'):
+            logger.info("Options file found")
+        else:
+            logger.warning("Options file not found")
+    else:
+        logger.warning("Data directory not found")
+    
+    logger.info("Starting Flask server on 0.0.0.0:8099...")
+    logger.info("=" * 50)
+    
+    try:
+        app.run(host='0.0.0.0', port=8099, debug=False, threaded=True)
+    except Exception as e:
+        logger.error(f"Failed to start server: {e}")
+        sys.exit(1)
