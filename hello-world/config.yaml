@@ -1,7 +1,8 @@
-name: "Hello World"
+name: Hello World
 version: "1.0.0"
-slug: "hello-world"
-description: "포트 8030에서 Hello World를 표시하는 간단한 애드온"
+slug: hello_world
+description: A simple Hello World add-on for Home Assistant
+url: https://github.com/cece0719/ha-addons
 arch:
   - armhf
   - armv7
@@ -9,11 +10,13 @@ arch:
   - amd64
   - i386
 startup: application
-init: false
+boot: auto
 ports:
-  8030/tcp: 8030
-map:
-  - config:rw
-  - ssl:ro
-webui: "http://[HOST]:[PORT]:8030/"
-image: "ghcr.io/cece0719/hello-world-{arch}" 
+  8099/tcp: 8099
+ports_description:
+  8099/tcp: Web interface
+webui: http://[HOST]:[PORT:8099]
+options:
+  message: "Hello World!"
+schema:
+  message: str
